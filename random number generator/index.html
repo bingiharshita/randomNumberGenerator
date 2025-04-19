@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Number Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: #f9f9f9;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin: 10px 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-generate {
+      background-color: #2196F3;
+    }
+
+    .btn-generate:hover {
+      background-color: #1976D2;
+    }
+
+    .btn-clear {
+      background-color: #9E9E9E;
+    }
+
+    .btn-clear:hover {
+      background-color: #757575;
+    }
+
+    .btn-add {
+      background-color: #4CAF50;
+    }
+
+    .btn-add:hover {
+      background-color: #388E3C;
+    }
+
+    .btn-discard {
+      background-color: #f44336;
+    }
+
+    .btn-discard:hover {
+      background-color: #d32f2f;
+    }
+
+    #generated-box {
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      width: 300px;
+      display: none;
+    }
+
+    #generated-number {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #number-container {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .number {
+      background: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 1.3rem;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎲 Random Number Generator</h1>
+
+  <div>
+    <button class="btn btn-generate" onclick="generateRandomNumber()">Generate Number</button>
+    <button class="btn btn-clear" onclick="clearNumbers()">Clear All</button>
+  </div>
+
+  <div id="generated-box">
+    <div id="generated-number"></div>
+    <div class="action-buttons">
+      <button class="btn btn-add" onclick="addToList()">Add</button>
+      <button class="btn btn-discard" onclick="discardNumber()">Discard</button>
+    </div>
+  </div>
+
+  <div id="number-container"></div>
+
+  <script>
+    let currentNumber = null;
+
+    function generateRandomNumber() {
+      currentNumber = Math.floor(Math.random() * 100) + 1;
+
+      const display = document.getElementById('generated-number');
+      display.textContent = `🎯 ${currentNumber}`;
+
+      document.getElementById('generated-box').style.display = 'block';
+    }
+
+    function addToList() {
+      if (currentNumber === null) return;
+
+      const container = document.getElementById('number-container');
+      const numberElement = document.createElement('div');
+      numberElement.classList.add('number');
+      numberElement.textContent = `🎯 ${currentNumber}`;
+      container.prepend(numberElement);
+
+      const items = container.querySelectorAll('.number');
+      if (items.length > 10) {
+        container.removeChild(container.lastChild);
+      }
+
+      discardNumber();
+    }
+
+    function discardNumber() {
+      document.getElementById('generated-box').style.display = 'none';
+      currentNumber = null;
+    }
+
+    function clearNumbers() {
+      document.getElementById('number-container').innerHTML = '';
+      discardNumber();
+    }
+  </script>
+</body>
+</html
