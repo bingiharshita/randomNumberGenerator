@@ -4,76 +4,74 @@
   <meta charset="UTF-8">
   <title>Random Number Generator</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
       padding: 40px;
-      background: #f9f9f9;
       margin: 0;
+      background: linear-gradient(to right, #e3f2fd, #fce4ec);
+      transition: background 0.5s ease;
     }
 
     h1 {
-      color: #333;
+      color: #222;
       margin-bottom: 30px;
+      font-size: 2.5rem;
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 1rem;
-      margin: 10px 5px;
+      margin: 10px 8px;
       cursor: pointer;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: white;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .btn-generate {
-      background-color: #2196F3;
-    }
-
-    .btn-generate:hover {
-      background-color: #1976D2;
+      background: linear-gradient(to right, #2196F3, #1E88E5);
     }
 
     .btn-clear {
-      background-color: #9E9E9E;
-    }
-
-    .btn-clear:hover {
-      background-color: #757575;
+      background: linear-gradient(to right, #9E9E9E, #757575);
     }
 
     .btn-add {
-      background-color: #4CAF50;
-    }
-
-    .btn-add:hover {
-      background-color: #388E3C;
+      background: linear-gradient(to right, #4CAF50, #43A047);
     }
 
     .btn-discard {
-      background-color: #f44336;
+      background: linear-gradient(to right, #f44336, #e53935);
     }
 
-    .btn-discard:hover {
-      background-color: #d32f2f;
+    .btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
     }
 
     #generated-box {
       margin: 30px auto;
-      padding: 20px;
+      padding: 25px;
       background: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
       width: 300px;
       display: none;
+      animation: popIn 0.4s ease forwards;
     }
 
     #generated-number {
-      font-size: 2rem;
-      color: #333;
-      margin-bottom: 15px;
+      font-size: 2.5rem;
+      color: #444;
+      margin-bottom: 20px;
+      animation: float 1.5s ease-in-out infinite;
     }
 
     .action-buttons {
@@ -83,20 +81,48 @@
     }
 
     #number-container {
-      margin-top: 40px;
+      margin-top: 50px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .number {
       background: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      font-size: 1.3rem;
+      padding: 12px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-size: 1.4rem;
       width: 300px;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
     }
   </style>
 </head>
@@ -105,7 +131,7 @@
   <h1>🎲 Random Number Generator</h1>
 
   <div>
-    <button class="btn btn-generate" onclick="generateRandomNumber()">Generate Number</button>
+    <button class="btn btn-generate" onclick="generateRandomNumber()">Generate</button>
     <button class="btn btn-clear" onclick="clearNumbers()">Clear All</button>
   </div>
 
@@ -124,11 +150,13 @@
 
     function generateRandomNumber() {
       currentNumber = Math.floor(Math.random() * 100) + 1;
-
       const display = document.getElementById('generated-number');
       display.textContent = `🎯 ${currentNumber}`;
-
-      document.getElementById('generated-box').style.display = 'block';
+      const box = document.getElementById('generated-box');
+      box.style.display = 'block';
+      box.classList.remove('animate');
+      void box.offsetWidth;
+      box.classList.add('animate');
     }
 
     function addToList() {
@@ -149,7 +177,8 @@
     }
 
     function discardNumber() {
-      document.getElementById('generated-box').style.display = 'none';
+      const box = document.getElementById('generated-box');
+      box.style.display = 'none';
       currentNumber = null;
     }
 
@@ -159,4 +188,4 @@
     }
   </script>
 </body>
-</html
+</html>
